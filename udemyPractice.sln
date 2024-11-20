@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5AB12B9B-660
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{21F345E6-7D6D-4306-AF8B-2F0E7E10DDE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLL", "DLL\DLL.csproj", "{0012BC7E-3D23-4F9E-A315-1401BC523E43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -11,11 +13,16 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{21F345E6-7D6D-4306-AF8B-2F0E7E10DDE4} = {5AB12B9B-6606-45EC-8838-1C951B702549}
+		{0012BC7E-3D23-4F9E-A315-1401BC523E43} = {5AB12B9B-6606-45EC-8838-1C951B702549}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{21F345E6-7D6D-4306-AF8B-2F0E7E10DDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21F345E6-7D6D-4306-AF8B-2F0E7E10DDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21F345E6-7D6D-4306-AF8B-2F0E7E10DDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21F345E6-7D6D-4306-AF8B-2F0E7E10DDE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0012BC7E-3D23-4F9E-A315-1401BC523E43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0012BC7E-3D23-4F9E-A315-1401BC523E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0012BC7E-3D23-4F9E-A315-1401BC523E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0012BC7E-3D23-4F9E-A315-1401BC523E43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

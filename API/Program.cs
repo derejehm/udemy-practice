@@ -1,3 +1,8 @@
+using DLL;
+using DLL.DbContext;
+using DLL.Repositorys;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning();
+builder.Services.AddScoped<IDepartementRepository, DepartementRepository>();
+
+
+DLLDependancy.AllDependancy(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 

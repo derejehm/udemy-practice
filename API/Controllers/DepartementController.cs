@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using DLL.Models;
+using DLL.Repositorys;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -6,38 +7,46 @@ namespace API.Controllers;
 
 public class DepartementController : MainController
 {
-    [HttpGet]
-    public IActionResult GetAll()
+    private readonly IDepartementRepository _departementRepository;
+
+    public  DepartementController(IDepartementRepository departementRepository )
     {
-        return Ok(DepartementStatic.GetDepartements());
+        _departementRepository = departementRepository;
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()   
+    {
+        return Ok(await _departementRepository.GetAll());
     }
     
     [HttpGet("{code}")]
-    public IActionResult GetA(string code)
+    public async Task<IActionResult> GetA(string code)
     {
-        return Ok(DepartementStatic.GetDepartementByCode(code));
+        return Ok(await _departementRepository.GetById(code));
     }
 
     [HttpPost]
-    public IActionResult Insert(Departement departement)
+    public async Task<IActionResult> Insert(Departement departement)
     {
-        return Ok(DepartementStatic.AddDepartement((departement)));
+        return Ok(await _departementRepository.Insert(departement));
     }
 
     [HttpPut("{code}")]
-    public IActionResult update(string code, Departement departement)
+    public async Task<IActionResult>  update(Departement departement)
     {
-        return Ok(DepartementStatic.updateDepartement(code,  departement));
+        return Ok( await _departementRepository.Update(departement));
     }
     
     [HttpDelete("{code}")]
-    public IActionResult Delete(string code)
+    public async Task<IActionResult> Delete(Departement departement)
     {
-        return Ok(DepartementStatic.DeleteDepartement(code));
+        return Ok(await _departementRepository.Delete(departement));
     }
 
 }
 
+/*
 public static class DepartementStatic{
 
     private static List<Departement> AllDepartements { get; set; } = new List<Departement>();
@@ -81,3 +90,4 @@ public static class DepartementStatic{
         return department;
     }
 }
+*/
