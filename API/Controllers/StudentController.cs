@@ -1,81 +1,58 @@
-﻿using DLL.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BLL.Request;
+using BLL.Services;
+using DLL.Model;
+using DLL.Repositories;
+using LightQuery.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers;
-
-public class StudentController : MainController
+namespace API.Controllers
 {
-    [HttpGet]
-    public IActionResult GetAll()
-    {
-        return Ok(StudentStatic.GetStudents());
-    }
     
-    [HttpGet("{email}")]
-    public IActionResult GetA(string email)
+    public class StudentController : MainApiController
     {
-        return Ok(StudentStatic.GetStudentByEmail(email));
-    }
+        private readonly IStudentService _studentService;
 
-    [HttpPost]
-    public IActionResult Insert(Student student)
-    {
-        return Ok(StudentStatic.AddStudent((student)));
-    }
 
-    [HttpPut("{email}")]
-    public IActionResult update(string email, Student student)
-    {
-        return Ok(StudentStatic.updateStudent(email,  student));
-    }
-    
-    [HttpDelete("{email}")]
-    public IActionResult Delete(string email)
-    {
-        return Ok(StudentStatic.DeleteStudent(email));
-    }
-}
-
-public static class StudentStatic{
-
-    private static List<Student> AllStudents { get; set; } = new List<Student>();
-
-    public static List<Student> GetStudents()
-    {
-        return AllStudents;
-    }
-
-    public static Student GetStudentByEmail(string email)
-    {
-        return AllStudents.FirstOrDefault(x => x.Email == email);
-    }
-
-    public static Student AddStudent(Student student)
-    {
-        AllStudents.Add(student);
-        return student;
-    }
-
-    public static Student updateStudent(string email, Student student)
-    {
-        Student result = new Student();
-        
-        foreach (var aStudent in AllStudents)
+        public StudentController(IStudentService studentService)
         {
-            if (email == aStudent.Email)
-            {
-                aStudent.Name = student.Name;
-                result=aStudent;
-            }
+            _studentService = studentService;
+        }
+        [AsyncLightQuery(forcePagination: true, defaultPageSize: 10, defaultSort: "studentId desc")]
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_studentService.GetAllAsync());
         }
 
-        return result;
+        [HttpGet("{email}")]
+        public async Task<ActionResult> GetA(string email)
+        {
+            return Ok(await  _studentService.GetAAsync(email));
+        }
+        
+        
+        [HttpPost]
+        public async Task<ActionResult> Insert(StudentInsertRequestViewModel studentRequest)
+        {
+            return Ok(await _studentService.InsertAsync(studentRequest));
+        }
+        
+        [HttpPut("{email}")]
+        public async Task<ActionResult> Update(string email,Student student)
+        {
+            return Ok(await _studentService.UpdateAsync(email,student));
+        }
+        
+        [HttpDelete("{email}")]
+        public async Task<ActionResult> Delete(string email)
+        {
+            return Ok(await _studentService.DeleteAsync(email));
+        }
     }
-
-    public static Student DeleteStudent(string email)
-    {
-        var student= AllStudents.FirstOrDefault(x => x.Email == email);
-        AllStudents=AllStudents.Where(x=>x.Email!=student.Email).ToList();
-        return student;
-    }
+    
+    
+    
 }
